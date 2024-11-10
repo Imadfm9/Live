@@ -20,7 +20,7 @@ jobs:
         env:
           FB_STREAM_URL: "rtmps://live-api-s.facebook.com:443/rtmp/"
           FB_STREAM_KEY: "FB-122164113626260989-0-Abz5W21hZ3ZZsfqg"  # مفتاح البث الجديد
-          STREAM_URL: "https://live4.beinconnect.us/YallaGoalApp/beINSports1.m3u8"  # رابط البث المباشر
+          STREAM_URL: "http://mo3ad.xyz:25461/YbcMhPbezV/Hd9mZpdL2p/4"  # رابط البث المباشر
 
         run: |
           ffmpeg -re -i "$STREAM_URL" \
