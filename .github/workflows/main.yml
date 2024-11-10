@@ -16,14 +16,6 @@ jobs:
       - name: Setup FFmpeg
         run: sudo apt-get update && sudo apt-get install -y ffmpeg
 
-      - name: Add Watermark Image
-        run: |
-          echo "Creating watermark image"
-          convert -size 300x100 xc:none -gravity center \
-          -pointsize 24 -fill white -draw "text 0,0 'IMADTV.COM'" \
-          -background none -gravity southeast -extent 300x100 \
-          watermark.png
-
       - name: Start streaming to Facebook
         env:
           FB_STREAM_URL: "rtmp://live-api-s.facebook.com:80/rtmp/"
@@ -31,6 +23,7 @@ jobs:
           STREAM_URL: "https://live4.beinconnect.us/YallaGoalApp/beINSports1.m3u8"  # رابط البث المباشر
 
         run: |
-          ffmpeg -re -i "$STREAM_URL" -i watermark.png \
-          -filter_complex "overlay=W-w-10:H-h-10:format=auto" -c:v libx264 -preset veryfast -maxrate 4000k -bufsize 8000k \
+          ffmpeg -re -i "$STREAM_URL" \
+          -vf "drawtext=text='IMADTV.COM':fontcolor=white@0.6:fontsize=24:x=10:y=H-th-10" \
+          -c:v libx264 -preset veryfast -maxrate 4000k -bufsize 8000k \
           -pix_fmt yuv420p -g 50 -c:a aac -b:a 128k -f flv "$FB_STREAM_URL$FB_STREAM_KEY"
